@@ -18,8 +18,8 @@ func newDeck() deck {
 	cardValues := []string{"ace", "two", "three", "four"}
 
 	for _, suit := range cardSuits {
-		for _	, value := range cardValues {
-			cards = append(cards, value + " of " + suit)
+		for _, value := range cardValues {
+			cards = append(cards, value+" of "+suit)
 		}
 	}
 
@@ -45,24 +45,22 @@ func (d deck) saveToFile(filename string) error {
 }
 
 func newDeckFromFile(filename string) deck {
-	 bs, err := ioutil.ReadFile(filename)
-	 if err != nil {
-	 	fmt.Println("Error: ", err)
-	 	os.Exit(1)
-	 }
+	bs, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		os.Exit(1)
+	}
 
-	 s := strings.Split(string(bs), ",")
-	 return deck(s)
+	s := strings.Split(string(bs), ",")
+	return deck(s)
 }
 
 func (d deck) shuffle() {
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
 	for i := range d {
-		pos := r.Intn(len(d) -1)
+		pos := r.Intn(len(d) - 1)
 
 		d[i], d[pos] = d[pos], d[i]
 	}
 }
-
-
